@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BianryTree.cpp
+ *       Filename:  Test163_1.c
  *
- *    Description:  二叉树
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2014年10月23日 13时11分25秒
+ *        Created:  2014年10月29日 19时49分02秒
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,7 +15,6 @@
  *
  * =====================================================================================
  */
-
 #include <unistd.h>
 #include <assert.h>
 #include <stdio.h>
@@ -25,6 +24,11 @@
 #define MaxSize 100
 #define TRUE 1
 #define FALSE 0
+
+int count = 0;
+int LeafNum = 0;
+int HightTree = 0;
+
 
 typedef struct BitreeData     //定义二叉树结构
 {
@@ -118,6 +122,14 @@ int PopStack(TS * s , BitNode **ch)
 	}
 }
 
+void PrintStack(TS * s)
+{
+	int i = 0;
+	for( ; i < s->top ; i++)  {
+		printf("%c  ",s->Bt[i].data);
+	}
+}
+
 void PreOrdernon(BitNode * TrHead)    //先序非递归遍历二叉树
 {
 	TS s;
@@ -155,9 +167,87 @@ void InOrdernon(BitNode * TrHead)    //先序非递归遍历二叉树
 	}
 }
 
+void TwoCount(BitNode * TrHead)   //求度为2的节点个数
+{
+	if( TrHead )  {
+		if(TrHead->LT != NULL && TrHead->RT !=NULL)
+		      LeafNum++;
+		TwoCount(TrHead->LT);
+		TwoCount(TrHead->RT);
+	}
+}
+
+void Exchanges(BitNode * TrHead)     //交换二叉树子树
+{
+	BitNode * p , *q;
+	if( TrHead )  {
+
+		if(TrHead->LT != NULL || TrHead->RT != NULL)  {
+			q = TrHead->RT;
+			p = TrHead->LT;
+			TrHead->LT = q;
+			TrHead->RT = p;
+			Exchanges(TrHead->LT);
+			Exchanges(TrHead->RT);
+		}
+	}
+}
+
+void FindPath( BitNode * TrHead , TS * s)    // 打印所有叶子节点到根的路径
+{
+	BitNode * p;
+	if( TrHead )  {
+		PushStack(s,TrHead);
+		if(TrHead->LT == NULL && TrHead->RT == NULL)  {
+			printf("%c:",TrHead->data);
+		        PrintStack(s);
+			printf("\n");
+		}
+		else   {
+			FindPath(TrHead->LT,s);
+			FindPath(TrHead->RT,s);
+		}
+		PopStack(s,&p);
+	}
+}
+
+void TuplePrint( BitNode * TrHead , TS * s)  //用三元组的办法先序打印树的节点以及层数
+{
+	if( TrHead )  {
+		PushStack(s,TrHead);
+		printf("(%c,%d)",TrHead->data,s->top+1);
+		TuplePrint(TrHead->LT,s);
+		TuplePrint(TrHead->RT,s);
+		PopStack(s,&TrHead);
+	}
+
+}
+
+void NumsLesf(BitNode * TrHead)   //先序遍历求叶子节点个数
+{
+	if( TrHead )  {
+		if(TrHead->LT == NULL && TrHead->RT == NULL)  
+		      LeafNum++;
+		NumsLesf(TrHead->LT);
+		NumsLesf(TrHead->RT);
+	}
+}
+
+void TreeHight(BitNode * TrHead,TS *s)   //先序求树的高度
+{
+	if( TrHead )  {
+		PushStack(s,TrHead);
+		if(TrHead->LT == NULL && TrHead->RT==NULL && HightTree < s->top )
+		      HightTree = s->top;
+		TreeHight(TrHead->LT,s);
+		TreeHight(TrHead->RT,s);
+	}
+}
 
 int main(int argc, char *argv[])
 {
+	TS s;
+	InitStack(&s);
 	BitNode * TreeHead;
 	TreeHead = CreatTree();
 /*	PreOrder(TreeHead);
@@ -166,10 +256,20 @@ int main(int argc, char *argv[])
 	printf("\n");
 	PostOrder(TreeHead);
 	printf("\n");
-*/
 	PreOrdernon(TreeHead);
 	printf("\n");
 	InOrdernon(TreeHead);
+	TwoCount(TreeHead);
+	printf("%d\n",count);
+	Exchanges(TreeHead);
+	PreOrder(TreeHead);
+	FindPath(TreeHead,&s);
+	TuplePrint(TreeHead,&s);
+	NumsLesf(TreeHead);
+	printf("%d\n",LeafNum);
+*/
+	TreeHight(TreeHead,&s);
+	printf("%d\n",HightTree);
 	return EXIT_SUCCESS;
 }
 
