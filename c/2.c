@@ -34,48 +34,41 @@ struct stu * creat()
 {
 	struct stu * head=NULL,*p,*pnew;
 	int count=0;
-	p=pnew=(struct stu*)malloc(sizeof(struct stu));
-	if(pnew==NULL)
-	      exit(0);
+        pnew=in(1);
 	printf("input:\n");
 	scanf("%d",&(pnew->i));
+	pnew->next=NULL;
+	p=pnew;
+	head=pnew;
 	while(pnew->i)
 	{
-		count ++;
-		if(count==1)
-		{
-			pnew->next=NULL;
-			p=pnew;
-			head=pnew;
-		}
-		else
-		{
-			p->next=NULL;
-			p->next=pnew;
-			p=pnew;
-		}
-		pnew=(struct stu *)malloc(sizeof(struct stu));
-		printf("input:\n");
-		scanf("%d",&pnew->i);
+		pnew=in(count);
+		pnew->next=NULL;
+		p->next=pnew;
+		p=pnew;
 	}
 	p->next=NULL;
 	free(pnew);
 	return head;
 
 }
-struct stu * in()
+struct stu * in(int count)
 {
-	struct stu*q;
+	struct stu* q;
 	q=(struct stu*)malloc(sizeof(struct stu));
+	if(q==NULL)
+	      exit(0);
+	if(count==1)
+	      return q;
+	scanf("%d",&(q->next));
 	return q;
-
 }
 struct stu*insert(struct stu*head)
 {
 	struct stu *p=head,*pnew;
 	while(p->next!=NULL)
 		p=p->next;
-	pnew=in();
+	pnew=in(1);
 	printf("input:\n");
 	scanf("%d",&(pnew->i));
 	p->next=pnew;
@@ -111,10 +104,7 @@ int main(int argc, char *argv[])
 {
 	struct stu *head;
 	head=creat();
-	head=out(head);
 	print(head);
-
-	
 
 	return EXIT_SUCCESS;
 }
