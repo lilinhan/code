@@ -17,16 +17,11 @@ int main( int argc , char * argv[] )  {
     std::vector<int> a(s.begin() , s.end());
     std::vector<int> b{1,2,3,4};
 
-    for(auto it = a.begin() ; it != a.end() ; it++)  {
-        std::cout << *it << std::endl;
+    a.emplace_back(1900);
+    for(auto it = a.cbegin() ; it != a.cend() ; it++) {
+        (*it)++;
     }
-    a.swap(b);
-
-    for(auto it = a.begin() ; it != a.end() ; it++)  {
-        std::cout << *it << std::endl;
-    }
-
-    for(auto it = b.begin() ; it != b.end() ; it++) {
+    for(auto it = a.rbegin() ; it != a.rend() ; it++) {
         std::cout << *it << std::endl;
     }
     return EXIT_SUCCESS;

@@ -72,6 +72,22 @@ StrVec & StrVec::operator=(const StrVec & rhs)  {
     return *this;
 }
 
+void StrVec::reallocate()  {
+    auto newcapacity = size()?2*size():1;
+    auto newdata = alloc.allocate(newcapacity);
+
+    auto dest = newdata;
+    auto elem = elements;
+    for(size_t i = 0 ; i != size() ; ++i )  {
+        alloc.construct(dest++ , std::move(*elem++));
+    }
+    free();
+
+    elements = newdata;
+    first_free = dest;
+    cap = elements + newcapacity;
+}
+
 int main( int argc , char * argv[] )  {
 
     return EXIT_SUCCESS;
