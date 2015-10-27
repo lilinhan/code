@@ -19,10 +19,8 @@
 #include<unistd.h>
 
 int main(int argc , char * argv[])  {
-    int a = 5;
-    printf("%p\n",&a);
-    printf("%p\n",(void *)a);
-
+    int *a;
+    printf("%d\n",*a);
     return EXIT_SUCCESS;
 }
 
