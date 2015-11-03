@@ -29,7 +29,7 @@ int main(int argc , char * argv[])  {
     int child_proc_number = MAX_CHILD_NUMBER;
     int i, ch;
     pid_t child_pid, father_pid;
-    pid_t pid[10];
+    pid_t pid[10] = {0};
 
     if(argc > 1)  {
         child_proc_number = atoi(argv[1]);
@@ -39,7 +39,8 @@ int main(int argc , char * argv[])  {
         child_pid = fork();
         pid[i] = child_pid;
         if(child_pid == 0)  {
-            printf("%d\n",getpid());
+            proc_number++;
+            printf("process %d , proc_number = %d\n", getpid(), proc_number);
             pid[i] = getpid();
             do_something();
         }else{
@@ -68,6 +69,8 @@ int main(int argc , char * argv[])  {
         printf("Kill all process is failed!\n");
         return -1;
     }
+
+    pause();
     return EXIT_SUCCESS;
 }
 

@@ -23,8 +23,9 @@
 #define MAX_THREAD 3
 
 
-unsigned long long main_counter, counter[MAX_THREAD];
+unsigned long long main_counter = 0, counter[MAX_THREAD];
 void *thread_work(void *);
+pthread_mutex_t mutex;
 
 int main(int argc , char * argv[])  {
     int i, rtn, ch;
@@ -61,7 +62,9 @@ void *thread_work(void *p) {
     printf("thread work , value = %d\n",*(int *)p);
     while(1) {
         counter[thread_num]++;
+        pthread_mutex_lock(&mutex);
         main_counter++;
+        pthread_mutex_unlock(&mutex);
     }
 }
 
