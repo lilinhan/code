@@ -19,9 +19,20 @@
 #include<unistd.h>
 #include<fcntl.h>
 
+#include<sys/time.h>
+
 int lock = 1; //0 = lock, 1 = unclock;
 
 void WriteFile() {
+    struct itimerval time;
+    time.it_interval.tv_usec = 0;
+    time.it_interval.tv_sec = 1;
+    time.it_value.tv_usec = 0;
+    time.it_value.tv_sec = 1;
+    if(setitimer(ITIMER_REAL, &time, NULL) < 0) {
+        fprintf(stderr, "Setitimer Failed.");
+        return;
+    }
     char *buf = "hello world!\n";
     while(1) {
         int fd = open("./1.text", O_APPEND | O_WRONLY, 0666);
@@ -34,11 +45,19 @@ void WriteFile() {
             lock = 1;
         }
         close(fd);
-        sleep(1);
     }
 }
 
 void ReadFile()  {
+    struct itimerval time;
+    time.it_interval.tv_usec = 0;
+    time.it_interval.tv_sec = 3;
+    time.it_value.tv_usec = 0;
+    time.it_value.tv_sec = 1;
+    if(setitimer(ITIMER_REAL, &time, NULL) < 0) {
+        fprintf(stderr, "Setitimer Failed.");
+        return;
+    }
     char buf[10000];
     while(1)  {
         int fd = open("./1.text", O_RDONLY, 0666);
