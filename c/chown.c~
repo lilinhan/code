@@ -1,0 +1,20 @@
+/*************************************************************************
+    > File Name: chown.c
+    > Author: lewin
+    > Mail: lilinhan1303@gmail.com
+    > Company:  Xiyou Linux Group
+    > Created Time: Fri 06 Nov 2015 17:26:01 CST
+ ************************************************************************/
+
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+
+int main(int argc , char * argv[])  {
+
+
+    return EXIT_SUCCESS;
+}
+
