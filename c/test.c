@@ -19,8 +19,11 @@
 #include<unistd.h>
 
 int main(int argc , char * argv[])  {
-    int *a;
-    printf("%d\n",*a);
-    return EXIT_SUCCESS;
+    int i= 0 , j = 0;
+    while(i < 10) {
+        if(!(i++%2) && ++j){}
+    }
+    printf("%d\n",j);
+
 }
 
