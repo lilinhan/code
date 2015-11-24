@@ -124,7 +124,7 @@ void Lexical::print_result(){
         std::cout << iterator->num << "  " << iterator->value << std::endl;
     }
 }
-
+/*
 int main(int argc, char* argv[])
 {
     std::string name = "test.c";
@@ -134,4 +134,4 @@ int main(int argc, char* argv[])
     lexical.print_result();
     return EXIT_SUCCESS;
 }
-
+*/

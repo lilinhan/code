@@ -5,6 +5,8 @@
 	> Company: Xiyou Linux Group
 	> Created Time: 2015年11月18日 星期三 19时37分22秒
  ************************************************************************/
+#pragma once
+
 #ifndef _LEXICAL_H
 #define _LEXICAL_H
 #endif
