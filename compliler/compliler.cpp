@@ -55,11 +55,11 @@ void Compliler::loop_each_token(std::vector<Token> para) {
             it = segmentit;
         }else if((*it).num == OPERATOR && (*it).value == "="){
             if((*(it+1)).num == NUMBER)  {
-                buffer += "mov al,";
+                buffer += "mov ax,";
                 buffer += (*(it+1)).value;
                 buffer += "\nmov ";
                 buffer += (*(it-1)).value;
-                buffer += ",al\n";
+                buffer += ",ax\n";
                 it += 2;
             }else {
                 if((*(it + 2)).value == "+") {

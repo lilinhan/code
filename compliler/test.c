@@ -1,9 +1,9 @@
 main()
 {
-    char x,y,z;
-    x = 9;
-    y = 9;
-    z = x * y;
+    char x ,y, z;
+    x = 3;
+    y = 2;
+    z = x + y;
     printf("%d",z);
 }
 
