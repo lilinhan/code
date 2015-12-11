@@ -27,7 +27,22 @@ void display_menu()  {
 
 int main(int argc, char *argv[])
 {
-
+    MemoryManagement manager;
+    char choice;
+    while(1){
+        display_menu();
+        std::cout << "What do you want?" << std::endl;
+        choice = getchar();
+        switch(choice)  {
+            case '1':manager.SetMemSize();system("cls");break;
+            case '2':manager.SetAlgorithm();manager.flag = 1;system("cls");break;
+            case '3':manager.NewProcess();manager.flag = 1;system("cls");break;
+            case '4':manager.KillProcess();manager.flag = 1;system("cls");break;
+            case '5':manager.DisplayMemoryUsage();manager.flag = 1;break;
+           // case '0':exit(1);break;
+            default:break;
+        }
+    }
     return EXIT_SUCCESS;
 }
 

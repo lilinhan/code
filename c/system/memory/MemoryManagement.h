@@ -27,16 +27,30 @@
 #define MA_BF 2
 #define MA_WF 3
 
-int men_size = DEFAULT_MEM_SIZE;
-int ma_algorith = MA_FF;
-static int pid = 0;
-int flag = 0;
-
 class MemoryManagement{
     public:
+        int men_size = DEFAULT_MEM_SIZE;
+        int ma_algorith = MA_FF;
+        int pid = 0;
+        int flag = 0;
+
         std::list<FreeBlockType> FreeMemoryList;
         std::list<AllocatedBlock> AllocatedBlockList;
 
+        MemoryManagement():pid(0), flag(0){
+            men_size = DEFAULT_MEM_SIZE;
+            ma_algorith = MA_FF;
+        }
+        ~MemoryManagement() {}
+
+        void SetMemSize();
+        void SetAlgorithm();
+        void NewProcess();
+        void KillProcess();
         void DisplayMemoryUsage();
+        void rearrage(int choice);
+        void rearrage_FF();
+        void rearrage_BF();
+        void rearrage_WF();
 };
 
