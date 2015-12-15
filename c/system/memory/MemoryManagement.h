@@ -29,8 +29,8 @@
 
 class MemoryManagement{
     public:
-        int mem_size = DEFAULT_MEM_SIZE;
-        int ma_algorith = MA_FF;
+        int mem_size;
+        int ma_algorith;
         int pid;
         int flag;
 
@@ -38,7 +38,7 @@ class MemoryManagement{
         std::list<AllocatedBlock> AllocatedBlockList;
 
         MemoryManagement():pid(0), flag(0){
-            men_size = DEFAULT_MEM_SIZE;
+            mem_size = DEFAULT_MEM_SIZE;
             ma_algorith = MA_FF;
         }
         ~MemoryManagement() {}
@@ -48,7 +48,7 @@ class MemoryManagement{
         void NewProcess();
         void KillProcess();
         void DisplayMemoryUsage();
-        void rearrage(int choice);
+        void rearrage();
         void rearrage_FF();
         void rearrage_BF();
         void rearrage_WF();

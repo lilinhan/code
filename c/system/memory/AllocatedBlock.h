@@ -13,6 +13,8 @@ class AllocatedBlock{
         int AllocatedStartAddress;
         std::string ProcessName;
 
+
+        AllocatedBlock(){}
         AllocatedBlock(int id, int size, int address, std::string name):Processid(id),AllocatedMemorySize(size),AllocatedStartAddress(address),ProcessName(name) {}
         ~AllocatedBlock(){}
 };
