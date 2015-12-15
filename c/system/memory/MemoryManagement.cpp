@@ -12,6 +12,7 @@
 #include<cstring>
 #include<string>
 #include<list>
+#include<iterator>
 
 #include"MemoryManagement.h"
 
@@ -98,11 +99,39 @@ void MemoryManagement::NewProcess()  {
 }
 
 void MemoryManagement::KillProcess() {
-    int id;
+    int id, size, addr;
     std::cout << "please input you want kill procee's id:";
     std::cin >> id;
 
+    for(auto it = AllocatedBlockList.begin(); it != AllocatedBlockList.end(); it++)  {
+        if(it->Processid == id) {
+            size = it->AllocatedMemorySize;
+            addr = it->AllocatedStartAddress;
+            AllocatedBlockList.erase(it);
+            break;
+        }
+    }
 
+    FreeBlockType block(size, addr);
+    FreeMemoryList.push_back(block);
+
+    FreeMemoryList.sort(SortAlgriothmByFF);
+
+    for(auto it = FreeMemoryList.begin(); it != FreeMemoryList.end(); it++) {
+        auto itnext = std::next(it,1);
+        if((it->FreeBlockStartAddress + it->FreeBlockSize) == ((itnext)->FreeBlockStartAddress)) {
+            (itnext)->FreeBlockSize += it->FreeBlockSize;
+            (itnext)->FreeBlockStartAddress = it->FreeBlockStartAddress;
+            FreeMemoryList.erase(it);
+            break;
+        }
+
+        auto itpre = std::prev(it,1);
+        if((it->FreeBlockStartAddress == (itpre->FreeBlockStartAddress + itpre->FreeBlockSize))) {
+            itpre->FreeBlockSize += it->FreeBlockSize;
+            FreeMemoryList.erase(it);
+        }
+    }
 }
 
 void MemoryManagement::DisplayMemoryUsage() {
@@ -116,7 +145,7 @@ void MemoryManagement::DisplayMemoryUsage() {
     std::cout << "--------------------------------------------" << std::endl;
     std::cout << "PID\tStart Address\tSize" << std::endl;
     for(auto block : AllocatedBlockList) {
-        std::cout << block.Processid << "\t\t" << block.AllocatedMemorySize << "\t" << block.AllocatedMemorySize << std::endl;
+        std::cout << block.Processid << "\t\t" << block.AllocatedStartAddress << "\t" << block.AllocatedMemorySize << std::endl;
     }
 }
 
