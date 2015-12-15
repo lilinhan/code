@@ -29,10 +29,10 @@
 
 class MemoryManagement{
     public:
-        int men_size = DEFAULT_MEM_SIZE;
+        int mem_size = DEFAULT_MEM_SIZE;
         int ma_algorith = MA_FF;
-        int pid = 0;
-        int flag = 0;
+        int pid;
+        int flag;
 
         std::list<FreeBlockType> FreeMemoryList;
         std::list<AllocatedBlock> AllocatedBlockList;
