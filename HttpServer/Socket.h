@@ -5,6 +5,8 @@
     > Organization: Xiyou Linux Group
     > Created Time: 2016年01月19日 星期二 20时36分29秒
  ************************************************************************/
+#pragma once
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
