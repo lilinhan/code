@@ -16,6 +16,11 @@
 #include<sys/types.h>
 #include<unistd.h>
 #include<pthread.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<fstream>
+#include<stdlib.h>
+#include<cstdio>
 
 enum Level{  //日志等级模仿java log4j
     OFF,    //最高级别 关闭日志记录
@@ -39,6 +44,8 @@ namespace MyTinyLog{
             std::string SourceFileName; //源文件的名字
             int LineNum;    //源文件行号
             std::mutex mutex;   //互斥文件
+            int Logfd;  //日志文件的fd
+            std::string LogPath;    //日志文件的路径
 
             void setLevel(Level le);
             void setCurrentTime();
@@ -50,6 +57,8 @@ namespace MyTinyLog{
 
             void readConfigFile(); //读配置文件
 
+            std::string transLevel();
+
         public:
             LOG(std::string AuthorName);
             ~LOG();
@@ -60,6 +69,5 @@ namespace MyTinyLog{
             void print();   //测试所有的域
     };
 }
-
 
 #endif
