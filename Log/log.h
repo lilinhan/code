@@ -35,7 +35,7 @@ namespace MyTinyLog{
             int ProcessID;    //当前进程的ID
             pthread_t PthreadID;  //当前线程的ID
             std::string Filter; //谁的动作(主要用于区分代码是谁写的)
-            std::string text;   //log的正文
+            std::string Text;   //log的正文
             std::string SourceFileName; //源文件的名字
             int LineNum;    //源文件行号
             std::mutex mutex;   //互斥文件
@@ -44,9 +44,9 @@ namespace MyTinyLog{
             void setCurrentTime();
             void setProcessID();
             void setPthreadID();
-            void setText();
-            void setSourceFileName();
-            void setLineNum();
+            void setText(std::string text);
+            void setSourceFileName(std::string FileName);
+            void setLineNum(int line);
 
             void readConfigFile(); //读配置文件
 

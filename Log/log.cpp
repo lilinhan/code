@@ -20,6 +20,21 @@ void LOG::setParam(Level le, std::string text, std::string FileName, int line) {
     setLevel(le);
     setProcessID();
     setPthreadID();
+    setText(text);
+    setSourceFileName(FileName);
+    setLineNum(line);
+}
+
+void LOG::setText(std::string text) {
+    Text = text;
+}
+
+void LOG::setSourceFileName(std::string FileName) {
+    SourceFileName = FileName;
+}
+
+void LOG::setLineNum (int line)  {
+    LineNum = line;
 }
 
 void LOG::setCurrentTime() {
@@ -41,11 +56,11 @@ void LOG::setPthreadID() {
 }
 
 void LOG::print() {
-    std::cout << level << "\t" << ProcessID << "\t" << PthreadID <<"\t" << Filter << "\t" <<CurrentTime;
+    std::cout << level<<"  " << SourceFileName<<"("<<LineNum<<")"  << "  " << ProcessID << "  " << PthreadID <<"  " << Filter << "  " <<CurrentTime << "  " << Text << std::endl;
 }
 
 int main() {
     LOG log("lewin");
-    log.setParam(OFF, "file error", __FILE__, 56);
+    log.setParam(OFF, "file error", __FILE__, __LINE__);
     log.print();
 }
