@@ -7,6 +7,7 @@
  ************************************************************************/
 #include<iostream>
 #include<ctime>
+#include<string>
 enum level{
     one,
     two,
@@ -22,12 +23,14 @@ namespace lala{
 
 int main(int argc, char *argv[])
 {
-        std::time_t t = std::time(0);
+ /*      std::time_t t = std::time(0);
         std::string str(std::asctime(std::localtime(&t)));
         std::cout << str;
-   /* lala::A a;
+    lala::A a;
     a.le = one;
     std::cout << a.le; */
+    std::string str(__FILE__);
+    std::cout << str << std::endl;
     return EXIT_SUCCESS;
 }
 

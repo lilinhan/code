@@ -12,6 +12,10 @@
 
 #include<iostream>
 #include<ctime>
+#include<mutex>
+#include<sys/types.h>
+#include<unistd.h>
+#include<pthread.h>
 
 enum Level{  //日志等级模仿java log4j
     OFF,    //最高级别 关闭日志记录
@@ -27,29 +31,33 @@ namespace MyTinyLog{
     class LOG{
         private:
             Level level;    //日志等级
-            std::time_t CurrentTime;    //打日志的时间
+            std::string CurrentTime;    //打日志的时间
             int ProcessID;    //当前进程的ID
-            int PthreadID;  //当前线程的ID
+            pthread_t PthreadID;  //当前线程的ID
             std::string Filter; //谁的动作(主要用于区分代码是谁写的)
             std::string text;   //log的正文
             std::string SourceFileName; //源文件的名字
             int LineNum;    //源文件行号
+            std::mutex mutex;   //互斥文件
 
-            bool setLevel();
-            bool setCurrentTime();
-            bool setProcessID();
-            bool setPthreadID();
-            bool setText();
-            bool setSourceFileName();
-            bool setLineNum();
+            void setLevel(Level le);
+            void setCurrentTime();
+            void setProcessID();
+            void setPthreadID();
+            void setText();
+            void setSourceFileName();
+            void setLineNum();
+
+            void readConfigFile(); //读配置文件
 
         public:
             LOG(std::string AuthorName);
             ~LOG();
 
-            bool setParam(Level level, std::string text);
-            bool appendLogTail();
-            bool stopLog();
+            void  setParam(Level level, std::string text, std::string FileName, int line);
+            void appendLogTail();
+            void stopLog();
+            void print();   //测试所有的域
     };
 }
 
