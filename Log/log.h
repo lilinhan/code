@@ -21,6 +21,7 @@
 #include<fstream>
 #include<stdlib.h>
 #include<cstdio>
+#include<thread>
 
 enum Level{  //日志等级模仿java log4j
     OFF,    //最高级别 关闭日志记录
@@ -47,6 +48,7 @@ namespace MyTinyLog{
             int Logfd;  //日志文件的fd
             std::string LogPath;    //日志文件的路径
 
+
             void setLevel(Level le);
             void setCurrentTime();
             void setProcessID();
@@ -55,7 +57,9 @@ namespace MyTinyLog{
             void setSourceFileName(std::string FileName);
             void setLineNum(int line);
 
+            std::string spliceString(); //将所有的数据进行拼接
             void readConfigFile(); //读配置文件
+            void writeLog(std::string str);   //写入  主要让线程去跑  做到异步写
 
             std::string transLevel();
 
@@ -64,7 +68,7 @@ namespace MyTinyLog{
             ~LOG();
 
             void  setParam(Level level, std::string text, std::string FileName, int line);
-            void appendLogTail();
+            void appendLogTail();  //添加日志到Log文件尾
             void stopLog();
             void print();   //测试所有的域
     };

@@ -82,7 +82,8 @@ std::string LOG::transLevel() {
     return NULL;
 }
 
-void LOG::appendLogTail() {
+
+std::string LOG::spliceString() {
     std::string model(" ");
 
     char temp1[100];
@@ -98,23 +99,30 @@ void LOG::appendLogTail() {
     std::string linenum1(temp3);
 
     std::string leveltemp = transLevel();
-    std::lock_guard<std::mutex> lock(mutex);
-    Logfd = open(LogPath.c_str(), O_WRONLY | O_APPEND, 0666);
-
     std::string str = leveltemp + model + SourceFileName +"("\
                       + linenum1 + ")"+ model + pid + model + tid \
                       + model + Filter + model + "\""+ Text +"\""\
                       + model + CurrentTime + "\n";
+}
 
+void LOG::writeLog(std::string str) {
+    Logfd = open(LogPath.c_str(), O_WRONLY | O_APPEND, 0666);
     if(write(Logfd, str.c_str(), str.size()) < 0) {
         perror("write in log file error\n");
-        exit(-1);
     }
 }
 
-int main() {
+void LOG::appendLogTail() {
+    std::string str = spliceString();
+    std::lock_guard<std::mutex> lock(mutex);
+    std::thread thread(write, str);
+    thread.join();
+}
+
+/*int main() {
     LOG log("lewin");
     log.setParam(OFF, "file error", __FILE__, __LINE__);
  //   log.print();
     log.appendLogTail();
 }
+*/
