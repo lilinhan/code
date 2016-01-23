@@ -59,7 +59,6 @@ namespace MyTinyLog{
 
             std::string spliceString(); //将所有的数据进行拼接
             void readConfigFile(); //读配置文件
-            void writeLog(std::string str);   //写入  主要让线程去跑  做到异步写
 
             std::string transLevel();
 
@@ -67,6 +66,7 @@ namespace MyTinyLog{
             LOG(std::string AuthorName);
             ~LOG();
 
+            void writeLog(std::string str);   //写入  主要让线程去跑  做到异步写
             void  setParam(Level level, std::string text, std::string FileName, int line);
             void appendLogTail();  //添加日志到Log文件尾
             void stopLog();

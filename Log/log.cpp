@@ -103,6 +103,7 @@ std::string LOG::spliceString() {
                       + linenum1 + ")"+ model + pid + model + tid \
                       + model + Filter + model + "\""+ Text +"\""\
                       + model + CurrentTime + "\n";
+    return str;
 }
 
 void LOG::writeLog(std::string str) {
@@ -115,7 +116,7 @@ void LOG::writeLog(std::string str) {
 void LOG::appendLogTail() {
     std::string str = spliceString();
     std::lock_guard<std::mutex> lock(mutex);
-    std::thread thread(write, str);
+    std::thread thread(std::bind(&LOG::writeLog,this,str));
     thread.join();
 }
 
