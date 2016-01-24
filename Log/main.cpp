@@ -9,8 +9,14 @@
 using namespace MyTinyLog;
 
 int main() {
+    time_t start, end;
+    time(&start);
     LOG log("lewin");
-    log.setParam(OFF, "file error", __FILE__, __LINE__);
- //   log.print();
-    log.appendLogTail();
+    for(int i = 0 ; i < 2000 ; i++)  {
+        log.setParam(OFF, "file error", __FILE__, __LINE__);
+        //   log.print();
+        log.appendLogTail();
+    }
+    time(&end);
+    std::cout << "Time = " << (end-start) << "s" << std::endl;
 }

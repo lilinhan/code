@@ -1,9 +1,9 @@
 /*************************************************************************
-    > File Name: log.cpp
-    > Author: lewin
-    > Mail: lilinhan1303@gmail.com
-    > Organization: Xiyou Linux Group
-    > Created Time: 2016年01月22日 星期五 14时36分58秒
+  > File Name: log.cpp
+  > Author: lewin
+  > Mail: lilinhan1303@gmail.com
+  > Organization: Xiyou Linux Group
+  > Created Time: 2016年01月22日 星期五 14时36分58秒
  ************************************************************************/
 #include"log.h"
 using namespace MyTinyLog;
@@ -83,7 +83,7 @@ std::string LOG::transLevel() {
 }
 
 
-std::string LOG::spliceString() {
+void LOG::spliceString() {
     std::string model(" ");
 
     char temp1[100];
@@ -103,27 +103,31 @@ std::string LOG::spliceString() {
                       + linenum1 + ")"+ model + pid + model + tid \
                       + model + Filter + model + "\""+ Text +"\""\
                       + model + CurrentTime + "\n";
-    return str;
+
+    Data += str;
 }
 
-void LOG::writeLog(std::string str) {
+void LOG::writeLog() {
     Logfd = open(LogPath.c_str(), O_WRONLY | O_APPEND, 0666);
-    if(write(Logfd, str.c_str(), str.size()) < 0) {
+    if(write(Logfd, Data.c_str(), Data.size()) < 0) {
         perror("write in log file error\n");
     }
+    close(Logfd);
 }
 
 void LOG::appendLogTail() {
-    std::string str = spliceString();
+    spliceString();
+/*
     std::lock_guard<std::mutex> lock(mutex);
-    std::thread thread(std::bind(&LOG::writeLog,this,str));
+    std::thread thread(std::bind(&LOG::writeLog,this));
     thread.join();
+    */
 }
 
 /*int main() {
-    LOG log("lewin");
-    log.setParam(OFF, "file error", __FILE__, __LINE__);
- //   log.print();
-    log.appendLogTail();
+  LOG log("lewin");
+  log.setParam(OFF, "file error", __FILE__, __LINE__);
+//   log.print();
+log.appendLogTail();
 }
 */
