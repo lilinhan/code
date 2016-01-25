@@ -12,6 +12,7 @@
 #include"QuickSort.cpp"
 #include"BubbleSort.cpp"
 #include"SelectSort.cpp"
+#include"InsertionSort.cpp"
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +26,8 @@ int main(int argc, char *argv[])
     auto start = std::chrono::system_clock::now();
    // QuickSort(ve, 0, ve.size()-1);
    // BubbleSort(ve);
-    SelectSort(ve);
+   // SelectSort(ve);
+    InsertionSort(ve);
     auto end = std::chrono::system_clock::now();
 
     std::cout << std::chrono::duration_cast<std::chrono::seconds>(end-start).count() << "seconds" << std::endl;
